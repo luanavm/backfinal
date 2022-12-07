@@ -16,19 +16,26 @@ class MsclientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    
+
+        public function index(){
+            return msclientes::paginate();
+        }
+    
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function crear(Request $request)
     {
-        //
+        $msclientes = new msclientes ();
+        'nombre'-> $request['nombre'];
+        'mail' -> $request['mail'];
+        'telefono'-> $request['telefono'];
+        'mensaje' -> $request['mensaje'];
+        return json_encode(["msg"=>"agregado"]);
     }
 
     /**
@@ -68,9 +75,17 @@ class MsclientesController extends Controller
      * @param  \App\Models\msclientes  $msclientes
      * @return \Illuminate\Http\Response
      */
-    public function edit(msclientes $msclientes)
-    {
-        //
+    public function editar(msclientes $msclientes, $id){
+        'nombre' -> $request['nombre'];
+        'mail' -> $request['mail'];
+        'telefono' -> $request['telefono'];
+        'mensaje' -> $request['mensaje'];
+        msclientes::where('id', $id)->update(
+            ['nombre'=>$nombre,
+            'mail'=>$mail,
+            'telefono'=>$telefono,
+            'mensaje'=>$mensaje]);
+        return json_encode(["msg"=>"editado"]);
     }
 
     /**
@@ -91,8 +106,9 @@ class MsclientesController extends Controller
      * @param  \App\Models\msclientes  $msclientes
      * @return \Illuminate\Http\Response
      */
-    public function destroy(msclientes $msclientes)
+    public function eliminar(msclientes $msclientes)
     {
-        //
+        msclientes::eliminar($id);
+        return json_encode(["msg"=>"eliminado"]);
     }
 }

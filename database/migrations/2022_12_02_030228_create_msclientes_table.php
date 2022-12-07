@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('msclientes', function (Blueprint $table) {
             $table->id();
+            $table->string('nombre',25);
+            $table->string('mail',40);
+            $table->bigInteger('telefono');
+            $table->text('mensaje');
+            $table->boolean('mail_enviado')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
