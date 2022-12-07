@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Article;
+use App\Http\Resources\Comment as CommentResource;
 use App\Models\msclientes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MsclientesController extends Controller
 {
@@ -35,7 +39,15 @@ class MsclientesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'text' => 'required|string'
+         ]);
+ 
+         $comment = $article->comments()->save(new Comment($request->all()));
+ 
+         Mail::to($article->user)->send(new NuevoComentario ($comment));
+ 
+         return response()->json(new CommentResource($comment), 201);
     }
 
     /**
@@ -44,9 +56,10 @@ class MsclientesController extends Controller
      * @param  \App\Models\msclientes  $msclientes
      * @return \Illuminate\Http\Response
      */
-    public function show(msclientes $msclientes)
+    public function show(msclientes $msclientes, Comment $comment)
     {
-        //
+        $comment = $msclientes->comments()->where('id', $comment->id)->firstOrFail();
+        return response()->json(new CommentResource($comment), 200);
     }
 
     /**

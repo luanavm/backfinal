@@ -14,10 +14,10 @@ return [
     |
     */
 
-    'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
+    'mailtrap' => [
+        'domain' => env('MAITRAP_DOMAIN'),
+        'secret' => env('MAILTRAP_SECRET'),
+        'endpoint' => env('MAILTRAP_ENDPOINT', 'smtp.mailtrap.io'),
         'scheme' => 'https',
     ],
 
