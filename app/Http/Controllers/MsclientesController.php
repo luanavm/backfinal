@@ -28,13 +28,13 @@ class MsclientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear(Request $request)
+    public function crear(  )
     {
         $msclientes = new msclientes ();
-        'nombre'-> $request['nombre'];
-        'mail' -> $request['mail'];
-        'telefono'-> $request['telefono'];
-        'mensaje' -> $request['mensaje'];
+        'Nombre'-> $request['Nombre'];
+        'Mail' -> $request['Mail'];
+        'Telefono'-> $request['Telefono'];
+        'Mensaje' -> $request['Tensaje'];
         return json_encode(["msg"=>"agregado"]);
     }
 
@@ -76,15 +76,15 @@ class MsclientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editar(msclientes $msclientes, $id){
-        'nombre' -> $request['nombre'];
-        'mail' -> $request['mail'];
-        'telefono' -> $request['telefono'];
-        'mensaje' -> $request['mensaje'];
+        'Nombre' -> $request['Nombre'];
+        'Mail' -> $request['Mail'];
+        'Telefono' -> $request['Telefono'];
+        'Mensaje' -> $request['Mensaje'];
         msclientes::where('id', $id)->update(
-            ['nombre'=>$nombre,
-            'mail'=>$mail,
-            'telefono'=>$telefono,
-            'mensaje'=>$mensaje]);
+            ['Nombre'=>$Nombre,
+            'Mail'=>$Mail,
+            'Telefono'=>$Telefono,
+            'Mensaje'=>$Mensaje]);
         return json_encode(["msg"=>"editado"]);
     }
 
