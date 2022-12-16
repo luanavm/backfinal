@@ -58,8 +58,13 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true
+        },
+        
+        "require": {
+           "guzzlehttp/guzzle": "^7.0"
         }
-    },
+     },
+    
     "minimum-stability": "dev",
     "prefer-stable": true
 }

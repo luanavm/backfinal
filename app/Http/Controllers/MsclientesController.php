@@ -6,6 +6,7 @@ use App\Comment;
 use App\Article;
 use App\Http\Resources\Comment as CommentResource;
 use App\Models\msclientes;
+use App\Mail\NuevoMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -30,12 +31,13 @@ class MsclientesController extends Controller
      */
     public function crear(Request $request)
     {
-        $msclientes = new msclientes ();
-        'nombre'-> $request['nombre'];
-        'mail' -> $request['mail'];
-        'telefono'-> $request['telefono'];
-        'mensaje' -> $request['mensaje'];
-        return json_encode(["msg"=>"agregado"]);
+        $msclientes = msclientes::create([
+        'nombre' => $request ['nombre'],
+        'mail' => $request ['mail'],
+        'telefono'=> $request ['telefono'],
+        'mensaje' => $request ['mensaje'], 
+        ]);
+       return json_encode(['msg'=>'agregado']);
     }
 
     /**
@@ -76,15 +78,11 @@ class MsclientesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editar(msclientes $msclientes, $id){
-        'nombre' -> $request['nombre'];
-        'mail' -> $request['mail'];
-        'telefono' -> $request['telefono'];
-        'mensaje' -> $request['mensaje'];
-        msclientes::where('id', $id)->update(
-            ['nombre'=>$nombre,
-            'mail'=>$mail,
-            'telefono'=>$telefono,
-            'mensaje'=>$mensaje]);
+        $comment = $msclientes::find($id);
+        $comment->nombre = $request['nombre'];
+        $comment->mail = $request['mail'];
+        $comment->telefono = $request['telefono'];
+        $comment->mensaje = $request['mensaje'];
         return json_encode(["msg"=>"editado"]);
     }
 
@@ -110,5 +108,10 @@ class MsclientesController extends Controller
     {
         msclientes::eliminar($id);
         return json_encode(["msg"=>"eliminado"]);
+    }
+
+    private function enviarMail($details)
+    {
+        Mail::to('luanamartinez29519@gmail.com')->send(new NuevoContacto($details));
     }
 }
