@@ -9,18 +9,19 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class NuevoMail extends Mailable
+class NuevoCliente extends Mailable
 {
     use Queueable, SerializesModels;
-    public $comment;
+
+    public $details;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Comment $comment)
+    public function __construct($details)
     {
-        $this->comment = $comment;
+        $this->details = $details;
     }
 
     /**
@@ -31,7 +32,7 @@ class NuevoMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Nuevo Mail',
+            subject: 'Una nueva consulta ha ingresado',
         );
     }
 
@@ -43,7 +44,7 @@ class NuevoMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'mail.NuevoMail',
+            view: 'mail.NuevoCliente',
         );
     }
 
@@ -56,13 +57,4 @@ class NuevoMail extends Mailable
     {
         return [];
     }
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->markdown('mail.emails.nuevomail');
-        }
 }

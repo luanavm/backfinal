@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
 use App\Article;
-use App\Http\Resources\Comment as CommentResource;
+use App\Comment;
+use App\Http\Requests\ClientePostRequest;
+use App\Mail\NuevoCliente;
 use App\Models\msclientes;
-use App\Mail\NuevoMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Resources\Comment as CommentResource;
 
 class MsclientesController extends Controller
 {
@@ -29,15 +30,28 @@ class MsclientesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function crear(Request $request)
+    public function crear(ClientePostRequest $request)
     {
         $msclientes = msclientes::create([
-        'nombre' => $request ['nombre'],
-        'mail' => $request ['mail'],
-        'telefono'=> $request ['telefono'],
-        'mensaje' => $request ['mensaje'], 
+            'nombre' => $request ['nombre'],
+            'mail' => $request ['mail'],
+            'telefono'=> $request ['telefono'],
+            'mensaje' => $request ['mensaje'], 
         ]);
-       return json_encode(['msg'=>'agregado']);
+
+        // aca realizamos el envio del mail
+        $details = [
+            'title' => 'Ingresó un nuevo contacto',
+            'body' =>   $msclientes
+        ];
+
+        Mail::to('luanamartinez29519@gmail.com')->send(new NuevoCliente($details));
+
+        // respuesta que va a devolver cuando se solicite esta ruta
+        return response()->json([
+            'mensaje' => 'Ingresó un nuevo contacto',
+            'data' => $msclientes
+        ]);
     }
 
     /**

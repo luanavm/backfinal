@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class msclientes extends Model
 {
     use HasFactory;
+    protected $table = 'msclientes';
+    protected $fillable = [
+        'nombre',
+        'mail',
+        'telefono',
+        'mensaje',
+        'mail_enviado'
+    ];
 }

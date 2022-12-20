@@ -18,8 +18,8 @@ use App\Http\Controllers\MsclientesController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/msclientes',[MsclientesController::class, 'index']);
-Route::get('/msclientes/{id}',[MsclientesController::class, 'show']);
-Route::post('/msclientes',[MsclientesController::class, 'crear']);
+Route::get('/obtenerClientes',[MsclientesController::class, 'index']);
+Route::get('/obtenerCliente/{id}',[MsclientesController::class, 'show']);
+Route::post('/insertarCliente',[MsclientesController::class, 'crear']);
 Route::delete('/msclientes/{id}',[MsclientesController::class, 'eliminar']);
 Route::put('/msclientes/{id}',[MsclientesController::class, 'editar']);
